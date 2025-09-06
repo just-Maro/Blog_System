@@ -19,9 +19,14 @@ $limit = 3;
 $offset = ($page - 1) * $limit;
 $numOfPages = ceil($totalPosts / $limit);
 if ($page < 1) {
-  $page = 1;
-} else if ($page > $numOfPages) {
-  $page = $numOfPages;
+  header('location:index.php?page=1');
+  exit();
+} else if ($numOfPages == 0 && isset($_GET['page'])) {
+  header("location:index.php");
+  exit();
+} else if ($page > $numOfPages && $numOfPages > 0) {
+  header("location:index.php?page=$numOfPages");
+  exit();
 }
 
 require_once 'inc/header.php';
